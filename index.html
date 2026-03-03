@@ -173,7 +173,7 @@
         }
         .btn-link:hover { background: var(--text); color: var(--bg); box-shadow: 0 0 15px rgba(255,255,255,0.3); font-weight: bold; }
 
-        /* COWBOY BEBOP GLITCH */
+        /* COWBOY BEBOP GLITCH TEXT */
         .bebop-glitch {
             margin-top: 30px;
             font-size: 0.75rem;
@@ -197,9 +197,60 @@
             80% { transform: translate(1px, -1px) rotate(1deg); }
             100% { transform: translate(-1px, 2px) rotate(-1deg); }
         }
+
+        /* MODAL CINEMÁTICO BEBOP */
+        .bebop-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            animation: fadeInModal 0.5s forwards;
+            cursor: pointer;
+        }
+        @keyframes fadeInModal { from { opacity: 0; } to { opacity: 1; } }
+        
+        .bebop-modal img {
+            max-width: 90%;
+            max-height: 60vh;
+            border-radius: 5px;
+            filter: grayscale(100%) contrast(120%);
+            box-shadow: 0 0 30px rgba(255, 0, 60, 0.4);
+        }
+        .bebop-text {
+            color: #fff;
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 1.5rem;
+            margin-top: 25px;
+            text-align: center;
+            text-shadow: 2px 2px 10px var(--red-accent);
+            letter-spacing: 2px;
+        }
+        .close-hint {
+            margin-top: 30px;
+            color: #666;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            animation: pulse-hint 2s infinite;
+        }
+        @keyframes pulse-hint {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
     </style>
 </head>
 <body>
+
+    <div id="bebopOverlay" class="bebop-modal" onclick="closeBebop()">
+        <img src="https://media.giphy.com/media/4ilFRqGNN1916/giphy.gif" alt="Spike Spiegel">
+        <div class="bebop-text">"Whatever happens, happens."</div>
+        <div class="close-hint">[ CLICK ANYWHERE TO CLOSE ]</div>
+    </div>
 
     <div id="particles-js"></div>
 
@@ -218,7 +269,7 @@
         <p class="stoic-quote">"El pasado ya no me afecta, y el futuro <span class="highlight-red">no puede</span>."</p>
 
         <div class="spotify-container">
-            <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/57RA3JGafJm5zRtKJiKPIm?theme=0" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/57RA3JGafJm5zRtKJiKPIm?utm_source=generator&theme=0" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
         </div>
 
         <div class="nav-buttons">
@@ -241,7 +292,7 @@
 
         <div id="about-tab" class="tab-content">
             <h2>Hardware & Software</h2>
-            <p>Estudié Ingeniería en el Desarrollo de Software en el CETI. Me maman las páginas web y las bases de datos, pero a lo largo del camino le he metido a un poco de todo:</p>
+            <p>Estudio Ingeniería en el Desarrollo de Software en el CETI. Me apasionan las páginas web y las bases de datos, pero a lo largo del camino he aprendido un poco de todo:</p>
             
             <div class="skills-container">
                 <span class="skill-badge">C++</span>
@@ -255,9 +306,9 @@
                 <span class="skill-badge">ESP32</span>
             </div>
 
-            <p>Actualmente ando puliendo mis habilidades desarrollando <strong>DyKarly</strong> (un sistema para homeópatas) y participando en otros proyectos como <strong>iTuto</strong>.</p>
+            <p>Actualmente estoy puliendo mis habilidades desarrollando <strong>DyKarly</strong> (un sistema para homeópatas) y participando en otros proyectos como <strong>iTuto</strong>.</p>
             
-            <p>Cuando no estoy programando, voy a estar jugando voli o en el gym. 100% overthinker.</p>
+            <p>Cuando no estoy programando, me encontrarás jugando vóley o en el gym. 100% overthinker.</p>
             
             <div class="eva-reference">
                 <span>[ PATTERN: BLUE ]</span>
@@ -273,7 +324,7 @@
             <div class="btn-link" onclick="copyDiscord()">DISCORD (@callmesin_)</div>
         </div>
 
-        <div class="bebop-glitch" onclick="bebopEasterEgg()">
+        <div class="bebop-glitch" onclick="openBebop()">
             See you space cowboy...
         </div>
 
@@ -282,7 +333,7 @@
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
         // Contador de Stalkers
-        fetch('https://api.counterapi.dev/v1/daity_portfolio_v2/stalkers/up')
+        fetch('https://api.counterapi.dev/v1/daity_portfolio_v3/stalkers/up')
             .then(response => response.json())
             .then(data => { document.getElementById('count').innerText = data.count; })
             .catch(() => { document.getElementById('count').innerText = Math.floor(Math.random() * 50) + 10; });
@@ -306,9 +357,12 @@
             alert("¡Usuario de Discord (callmesin_) copiado al portapapeles! Listo para agregar.");
         }
 
-        // Easter Egg de Cowboy Bebop
-        function bebopEasterEgg() {
-            alert('"Whatever happens, happens."\n- Spike Spiegel');
+        // Animación Épica de Cowboy Bebop
+        function openBebop() {
+            document.getElementById('bebopOverlay').style.display = 'flex';
+        }
+        function closeBebop() {
+            document.getElementById('bebopOverlay').style.display = 'none';
         }
 
         // Partículas (Geométricas blancas)
