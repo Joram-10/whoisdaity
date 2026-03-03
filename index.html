@@ -43,12 +43,12 @@
             border-radius: 15px;
             padding: 40px;
             width: 90%;
-            max-width: 450px;
+            max-width: 480px; /* Un poco más ancha para tu nueva info */
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9);
             text-align: center;
         }
 
-        /* GENGAR SHINY (ARRIBA) */
+        /* GENGAR SHINY */
         .pokemon-sprite { margin-bottom: 10px; animation: float 3s ease-in-out infinite; }
         .pokemon-sprite img { width: 85px; filter: drop-shadow(0 0 10px rgba(255, 0, 60, 0.3)); }
         @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-12px); } }
@@ -61,7 +61,7 @@
             transform: translateY(-50%);
             width: 50px;
             animation: float-mini 3s ease-in-out infinite;
-            filter: drop-shadow(0 0 8px rgba(0, 150, 255, 0.6)); /* Brillo azul para el shiny */
+            filter: drop-shadow(0 0 8px rgba(0, 150, 255, 0.6));
         }
         @keyframes float-mini {
             0%, 100% { transform: translateY(-50%) translateY(0px); }
@@ -112,20 +112,36 @@
         
         /* TEXTOS */
         h2 { font-size: 1.1rem; color: var(--text); margin-bottom: 10px; border-bottom: 1px solid var(--border); padding-bottom: 5px; text-transform: uppercase; }
-        p, li { color: #ccc; font-size: 0.85rem; line-height: 1.6; margin-bottom: 8px; }
+        p, li { color: #ccc; font-size: 0.85rem; line-height: 1.6; margin-bottom: 10px; }
+
+        /* SKILLS BADGES */
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 15px;
+        }
+        .skill-badge {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            color: #bbb;
+        }
 
         /* EVANGELION REFERENCE */
         .eva-reference {
-            margin-top: 15px;
+            margin-top: 20px;
             padding: 12px;
             border-left: 3px solid var(--red-accent);
-            background: rgba(255, 0, 60, 0.05);
+            background: rgba(255, 0, 60, 0.02);
             font-size: 0.8rem;
         }
         .eva-reference span {
             color: var(--red-accent);
-            font-weight: bold;
-            letter-spacing: 1px;
+            font-size: 0.7rem;
+            letter-spacing: 2px;
             display: block;
             margin-bottom: 5px;
         }
@@ -183,10 +199,6 @@
         </div>
 
         <div id="home-tab" class="tab-content active">
-            <div class="status-box">
-                <div class="status-title">★ OVERWATCH 2</div>
-                <p>Rango Histórico: <strong>Top 500</strong></p>
-            </div>
             
             <div class="status-box">
                 <div class="status-title">► ONLINE EN POKEMMO</div>
@@ -200,25 +212,40 @@
 
         <div id="about-tab" class="tab-content">
             <h2>Hardware & Software</h2>
-            <p>Qué onda, soy estudiante de Ingeniería en Software en el CETI. Le meto duro a la lógica pura con C++ y armo cosas en desarrollo web.</p>
-            <p>Cuando no estoy tirando código, me vas a encontrar dándole al gym o echando la reta de voli. Nada de textos de robot por aquí, puro overthinker.</p>
+            <p>Estudié Ingeniería en el Desarrollo de Software en el CETI. Me maman las páginas web y las bases de datos, pero a lo largo del camino le he metido a un poco de todo:</p>
+            
+            <div class="skills-container">
+                <span class="skill-badge">C++</span>
+                <span class="skill-badge">Python</span>
+                <span class="skill-badge">JavaScript (Apache)</span>
+                <span class="skill-badge">MongoDB</span>
+                <span class="skill-badge">Ensamblador</span>
+                <span class="skill-badge">DFD</span>
+                <span class="skill-badge">Android Móvil</span>
+                <span class="skill-badge">Arduino</span>
+                <span class="skill-badge">ESP32</span>
+            </div>
+
+            <p>Actualmente ando puliendo mis habilidades desarrollando <strong>iTuto</strong> (un sistema para homeópatas) y creando diseños para <strong>DyKarly</strong>.</p>
+            
+            <p>Cuando no estoy programando, voy a estar jugando voli o en el gym (haciendo el esfuerzo por dejar la Coca y el azúcar, aunque los Takis a veces ganan). 100% overthinker.</p>
             
             <div class="eva-reference">
-                <span>[ ERROR: SYNC RATE 400% ]</span>
-                <p>Fan a muerte de Evangelion. Si el mundo se acaba hoy, yo me subo al Eva.</p>
+                <span>[ PATTERN: BLUE ]</span>
+                <p>Fan de Evangelion y el buen anime. Sobreviviendo al dilema del erizo sin ponerme raro.</p>
             </div>
         </div>
 
         <div id="contact-tab" class="tab-content">
             <h2>Redes</h2>
-            <a href="https://github.com/Joram-10" target="_blank" class="btn-link">GITHUB (Proyectos Escolares)</a>
+            <a href="https://github.com/Joram-10" target="_blank" class="btn-link">GITHUB (Proyectos y Código)</a>
             <a href="https://instagram.com/joram_luvs_naara" target="_blank" class="btn-link">INSTAGRAM (@joram_luvs_naara)</a>
             
             <div class="btn-link" onclick="copyDiscord()">DISCORD (@callmesin_)</div>
         </div>
 
         <div class="bebop-glitch" onclick="bebopEasterEgg()">
-            You're gonna carry that weight.
+            See you space cowboy...
         </div>
 
     </div>
@@ -246,7 +273,7 @@
 
         // Easter Egg de Cowboy Bebop
         function bebopEasterEgg() {
-            alert('"See you space cowboy..."\n- Spike Spiegel');
+            alert('"Whatever happens, happens."\n- Spike Spiegel');
         }
 
         // Partículas (Geométricas blancas)
