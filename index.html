@@ -7,11 +7,11 @@
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
     
     <style>
-        /* PALETA DE COLORES: Negro, Blanco y Rojo */
+        /* PALETA DE COLORES */
         :root {
             --bg: #050505;
             --text: #ffffff;
-            --red-accent: #ff003c; /* Rojo tipo Evangelion/Bebop */
+            --red-accent: #ff003c;
             --glass: rgba(255, 255, 255, 0.03);
             --border: rgba(255, 255, 255, 0.1);
         }
@@ -31,7 +31,7 @@
 
         #particles-js { position: fixed; width: 100%; height: 100%; z-index: 1; }
 
-        /* TARJETA PRINCIPAL VERTICAL */
+        /* TARJETA PRINCIPAL */
         .main-card {
             position: relative;
             z-index: 2;
@@ -48,10 +48,25 @@
             text-align: center;
         }
 
-        /* GENGAR SHINY */
+        /* GENGAR SHINY (ARRIBA) */
         .pokemon-sprite { margin-bottom: 10px; animation: float 3s ease-in-out infinite; }
         .pokemon-sprite img { width: 85px; filter: drop-shadow(0 0 10px rgba(255, 0, 60, 0.3)); }
         @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-12px); } }
+
+        /* UMBREON SHINY (FLOTANDO EN STATUS) */
+        .floating-mini {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            animation: float-mini 3s ease-in-out infinite;
+            filter: drop-shadow(0 0 8px rgba(0, 150, 255, 0.6)); /* Brillo azul para el shiny */
+        }
+        @keyframes float-mini {
+            0%, 100% { transform: translateY(-50%) translateY(0px); }
+            50% { transform: translateY(-50%) translateY(-6px); }
+        }
 
         .title { font-size: 2.2rem; letter-spacing: 5px; margin-bottom: 5px; font-weight: bold; }
         
@@ -64,7 +79,6 @@
             margin-bottom: 20px;
             line-height: 1.4;
         }
-
         .highlight-red { color: var(--red-accent); font-weight: bold; }
 
         /* TABS (PESTAÑAS) */
@@ -81,13 +95,13 @@
         .tab-btn:hover, .tab-btn.active { color: var(--text); text-shadow: 0 0 10px rgba(255,255,255,0.5); font-weight: bold; }
         .tab-btn.active { border-bottom: 2px solid var(--red-accent); padding-bottom: 5px; }
 
-        /* CONTENIDO DE PESTAÑAS */
         .tab-content { display: none; animation: fadeIn 0.4s ease; text-align: left; }
         .tab-content.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 
         /* STATUS GAMER */
         .status-box { 
+            position: relative;
             background: rgba(255, 0, 60, 0.05); 
             border-radius: 8px; 
             padding: 12px; 
@@ -99,8 +113,22 @@
         /* TEXTOS */
         h2 { font-size: 1.1rem; color: var(--text); margin-bottom: 10px; border-bottom: 1px solid var(--border); padding-bottom: 5px; text-transform: uppercase; }
         p, li { color: #ccc; font-size: 0.85rem; line-height: 1.6; margin-bottom: 8px; }
-        ul { list-style-type: none; padding-left: 5px; margin-bottom: 15px; }
-        li::before { content: "» "; color: var(--red-accent); font-weight: bold; }
+
+        /* EVANGELION REFERENCE */
+        .eva-reference {
+            margin-top: 15px;
+            padding: 12px;
+            border-left: 3px solid var(--red-accent);
+            background: rgba(255, 0, 60, 0.05);
+            font-size: 0.8rem;
+        }
+        .eva-reference span {
+            color: var(--red-accent);
+            font-weight: bold;
+            letter-spacing: 1px;
+            display: block;
+            margin-bottom: 5px;
+        }
 
         /* BOTONES DE REDES */
         .btn-link { 
@@ -108,20 +136,29 @@
         }
         .btn-link:hover { background: var(--text); color: var(--bg); box-shadow: 0 0 15px rgba(255,255,255,0.3); font-weight: bold; }
 
-        /* COWBOY BEBOP REFERENCE */
-        .bebop {
-            margin-top: 30px;
+        /* COWBOY BEBOP GLITCH */
+        .bebop-glitch {
+            margin-top: 35px;
             font-size: 0.75rem;
             color: #444;
-            letter-spacing: 4px;
+            letter-spacing: 3px;
             text-transform: uppercase;
             text-align: center;
             cursor: pointer;
-            transition: color 0.3s ease;
+            transition: 0.3s;
         }
-        .bebop:hover {
+        .bebop-glitch:hover {
             color: var(--red-accent);
-            text-shadow: 0 0 10px rgba(255, 0, 60, 0.5);
+            text-shadow: 0 0 10px rgba(255, 0, 60, 0.8);
+            animation: glitch-shake 0.4s infinite;
+        }
+        @keyframes glitch-shake {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            20% { transform: translate(-1px, -2px) rotate(-1deg); }
+            40% { transform: translate(-2px, 0px) rotate(1deg); }
+            60% { transform: translate(2px, 2px) rotate(0deg); }
+            80% { transform: translate(1px, -1px) rotate(1deg); }
+            100% { transform: translate(-1px, 2px) rotate(-1deg); }
         }
     </style>
 </head>
@@ -148,26 +185,28 @@
         <div id="home-tab" class="tab-content active">
             <div class="status-box">
                 <div class="status-title">★ OVERWATCH 2</div>
-                <p>Rango Histórico: <strong>Top 500</strong> (Lanzamiento)</p>
+                <p>Rango Histórico: <strong>Top 500</strong></p>
             </div>
+            
             <div class="status-box">
                 <div class="status-title">► ONLINE EN POKEMMO</div>
-                <p>Región: <strong>Teselia</strong> | Main: <strong>Dragonite</strong></p>
+                <p>Región: <strong>Teselia</strong></p>
+                <p>Main: <strong>Umbreon Shiny</strong></p>
+                <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/shiny/197.gif" alt="Umbreon Shiny" class="floating-mini">
             </div>
-            <p style="text-align: center; font-size: 0.8rem; color: #888;">También activo en: Valorant, Fortnite y Rocket League.</p>
+            
+            <p style="text-align: center; font-size: 0.75rem; color: #888; margin-top: 15px;">También activo en: Valorant, Fortnite, Rocket League y Minecraft.</p>
         </div>
 
         <div id="about-tab" class="tab-content">
             <h2>Hardware & Software</h2>
-            <p>Estudiante de Ingeniería en Software en el CETI. Enfocado en lógica pura con C++ y desarrollo web. Entrenando en el gym y en la cancha de voleibol cuando no estoy programando.</p>
+            <p>Qué onda, soy estudiante de Ingeniería en Software en el CETI. Le meto duro a la lógica pura con C++ y armo cosas en desarrollo web.</p>
+            <p>Cuando no estoy tirando código, me vas a encontrar dándole al gym o echando la reta de voli. Nada de textos de robot por aquí, puro overthinker.</p>
             
-            <h2 style="margin-top: 15px;">Cultura Anime</h2>
-            <ul>
-                <li><strong>El Favorito:</strong> Neon Genesis Evangelion</li>
-                <li><strong>El Primero:</strong> Darling in the Franxx</li>
-                <li><strong>Shonen:</strong> Jujutsu Kaisen, Sakamoto Days</li>
-                <li><strong>Romance:</strong> Horimiya</li>
-            </ul>
+            <div class="eva-reference">
+                <span>[ ERROR: SYNC RATE 400% ]</span>
+                <p>Fan a muerte de Evangelion. Si el mundo se acaba hoy, yo me subo al Eva.</p>
+            </div>
         </div>
 
         <div id="contact-tab" class="tab-content">
@@ -178,8 +217,8 @@
             <div class="btn-link" onclick="copyDiscord()">DISCORD (@callmesin_)</div>
         </div>
 
-        <div class="bebop" onclick="bebopEasterEgg()">
-            See you space cowboy...
+        <div class="bebop-glitch" onclick="bebopEasterEgg()">
+            You're gonna carry that weight.
         </div>
 
     </div>
@@ -207,7 +246,7 @@
 
         // Easter Egg de Cowboy Bebop
         function bebopEasterEgg() {
-            alert('"Whatever happens, happens."\n- Spike Spiegel');
+            alert('"See you space cowboy..."\n- Spike Spiegel');
         }
 
         // Partículas (Geométricas blancas)
