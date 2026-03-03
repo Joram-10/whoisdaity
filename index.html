@@ -41,19 +41,24 @@
             border: 1px solid var(--border);
             border-top: 3px solid var(--red-accent);
             border-radius: 15px;
-            padding: 40px;
+            padding: 35px;
             width: 90%;
-            max-width: 480px; /* Un poco más ancha para tu nueva info */
+            max-width: 480px;
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9);
             text-align: center;
+            max-height: 95vh;
+            overflow-y: auto;
         }
 
-        /* GENGAR SHINY */
-        .pokemon-sprite { margin-bottom: 10px; animation: float 3s ease-in-out infinite; }
-        .pokemon-sprite img { width: 85px; filter: drop-shadow(0 0 10px rgba(255, 0, 60, 0.3)); }
-        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-12px); } }
+        /* OCULTAR SCROLLBAR */
+        .main-card::-webkit-scrollbar { width: 0px; }
 
-        /* UMBREON SHINY (FLOTANDO EN STATUS) */
+        /* GENGAR SHINY */
+        .pokemon-sprite { margin-bottom: 5px; animation: float 3s ease-in-out infinite; }
+        .pokemon-sprite img { width: 80px; filter: drop-shadow(0 0 10px rgba(255, 0, 60, 0.3)); }
+        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
+
+        /* UMBREON SHINY */
         .floating-mini {
             position: absolute;
             right: 15px;
@@ -70,24 +75,40 @@
 
         .title { font-size: 2.2rem; letter-spacing: 5px; margin-bottom: 5px; font-weight: bold; }
         
+        /* CONTADOR DE STALKERS */
+        .visitor-count { 
+            font-size: 0.75rem; 
+            color: #888; 
+            margin-bottom: 5px; 
+            letter-spacing: 1px; 
+        }
+        .visitor-count span { color: var(--red-accent); font-weight: bold; }
+
         /* FRASE ESTOICA */
         .stoic-quote {
             font-family: 'Playfair Display', serif;
             font-style: italic;
             font-size: 0.95rem;
             color: #aaa;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             line-height: 1.4;
         }
         .highlight-red { color: var(--red-accent); font-weight: bold; }
+
+        /* SPOTIFY PLAYER */
+        .spotify-container {
+            margin-bottom: 20px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+        }
 
         /* TABS (PESTAÑAS) */
         .nav-buttons { 
             display: flex; 
             justify-content: space-between; 
-            margin-bottom: 25px; 
+            margin-bottom: 20px; 
             border-bottom: 1px solid var(--border);
-            padding-bottom: 15px;
+            padding-bottom: 12px;
         }
         .tab-btn { 
             background: none; border: none; color: #666; font-family: inherit; font-size: 0.85rem; cursor: pointer; transition: 0.3s; letter-spacing: 1px;
@@ -154,7 +175,7 @@
 
         /* COWBOY BEBOP GLITCH */
         .bebop-glitch {
-            margin-top: 35px;
+            margin-top: 30px;
             font-size: 0.75rem;
             color: #444;
             letter-spacing: 3px;
@@ -190,7 +211,15 @@
 
         <h1 class="title">DAITY</h1>
         
+        <div class="visitor-count">
+            Eres la persona #<span id="count">...</span> que me stalkea.
+        </div>
+
         <p class="stoic-quote">"El pasado ya no me afecta, y el futuro <span class="highlight-red">no puede</span>."</p>
+
+        <div class="spotify-container">
+            <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/57RA3JGafJm5zRtKJiKPIm?theme=0" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        </div>
 
         <div class="nav-buttons">
             <button class="tab-btn active" onclick="openTab(event, 'home-tab')">ESTADO</button>
@@ -226,9 +255,9 @@
                 <span class="skill-badge">ESP32</span>
             </div>
 
-            <p>Actualmente ando puliendo mis habilidades desarrollando <strong>iTuto</strong> (un sistema para homeópatas) y creando diseños para <strong>DyKarly</strong>.</p>
+            <p>Actualmente ando puliendo mis habilidades desarrollando <strong>DyKarly</strong> (un sistema para homeópatas) y participando en otros proyectos como <strong>iTuto</strong>.</p>
             
-            <p>Cuando no estoy programando, voy a estar jugando voli o en el gym (haciendo el esfuerzo por dejar la Coca y el azúcar, aunque los Takis a veces ganan). 100% overthinker.</p>
+            <p>Cuando no estoy programando, voy a estar jugando voli o en el gym. 100% overthinker.</p>
             
             <div class="eva-reference">
                 <span>[ PATTERN: BLUE ]</span>
@@ -252,6 +281,12 @@
 
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
+        // Contador de Stalkers
+        fetch('https://api.counterapi.dev/v1/daity_portfolio_v2/stalkers/up')
+            .then(response => response.json())
+            .then(data => { document.getElementById('count').innerText = data.count; })
+            .catch(() => { document.getElementById('count').innerText = Math.floor(Math.random() * 50) + 10; });
+
         // Lógica de Pestañas
         function openTab(evt, tabName) {
             let i, tabcontent, tablinks;
