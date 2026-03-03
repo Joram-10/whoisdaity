@@ -11,7 +11,7 @@
         :root {
             --bg: #050505;
             --text: #ffffff;
-            --red-accent: #ff003c; /* Rojo estilo Evangelion */
+            --red-accent: #ff003c; /* Rojo tipo Evangelion/Bebop */
             --glass: rgba(255, 255, 255, 0.03);
             --border: rgba(255, 255, 255, 0.1);
         }
@@ -39,7 +39,7 @@
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
             border: 1px solid var(--border);
-            border-top: 3px solid var(--red-accent); /* Detalle rojo arriba */
+            border-top: 3px solid var(--red-accent);
             border-radius: 15px;
             padding: 40px;
             width: 90%;
@@ -50,7 +50,7 @@
 
         /* GENGAR SHINY */
         .pokemon-sprite { margin-bottom: 10px; animation: float 3s ease-in-out infinite; }
-        .pokemon-sprite img { width: 85px; filter: drop-shadow(0 0 10px rgba(255, 0, 60, 0.3)); } /* Brillo rojizo */
+        .pokemon-sprite img { width: 85px; filter: drop-shadow(0 0 10px rgba(255, 0, 60, 0.3)); }
         @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-12px); } }
 
         .title { font-size: 2.2rem; letter-spacing: 5px; margin-bottom: 5px; font-weight: bold; }
@@ -86,7 +86,7 @@
         .tab-content.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* STATUS GAMER (OW2 & POKEMMO) */
+        /* STATUS GAMER */
         .status-box { 
             background: rgba(255, 0, 60, 0.05); 
             border-radius: 8px; 
@@ -104,18 +104,24 @@
 
         /* BOTONES DE REDES */
         .btn-link { 
-            display: block; text-decoration: none; color: var(--text); border: 1px solid var(--border); padding: 12px; border-radius: 8px; transition: 0.3s; font-size: 0.85rem; text-align: center; margin-bottom: 10px; background: rgba(255,255,255,0.02);
+            display: block; text-decoration: none; color: var(--text); border: 1px solid var(--border); padding: 12px; border-radius: 8px; transition: 0.3s; font-size: 0.85rem; text-align: center; margin-bottom: 10px; background: rgba(255,255,255,0.02); cursor: pointer;
         }
         .btn-link:hover { background: var(--text); color: var(--bg); box-shadow: 0 0 15px rgba(255,255,255,0.3); font-weight: bold; }
 
         /* COWBOY BEBOP REFERENCE */
         .bebop {
             margin-top: 30px;
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             color: #444;
-            letter-spacing: 2px;
+            letter-spacing: 4px;
             text-transform: uppercase;
             text-align: center;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        .bebop:hover {
+            color: var(--red-accent);
+            text-shadow: 0 0 10px rgba(255, 0, 60, 0.5);
         }
     </style>
 </head>
@@ -168,10 +174,13 @@
             <h2>Redes</h2>
             <a href="https://github.com/Joram-10" target="_blank" class="btn-link">GITHUB (Proyectos Escolares)</a>
             <a href="https://instagram.com/joram_luvs_naara" target="_blank" class="btn-link">INSTAGRAM (@joram_luvs_naara)</a>
-            <a href="#" class="btn-link" id="discord-btn">DISCORD (Daity#0000)</a>
+            
+            <div class="btn-link" onclick="copyDiscord()">DISCORD (@callmesin_)</div>
         </div>
 
-        <p class="bebop">See you space cowboy...</p>
+        <div class="bebop" onclick="bebopEasterEgg()">
+            See you space cowboy...
+        </div>
 
     </div>
 
@@ -188,6 +197,17 @@
             
             document.getElementById(tabName).classList.add("active");
             evt.currentTarget.classList.add("active");
+        }
+
+        // Copiar usuario de Discord
+        function copyDiscord() {
+            navigator.clipboard.writeText("callmesin_");
+            alert("¡Usuario de Discord (callmesin_) copiado al portapapeles! Listo para agregar.");
+        }
+
+        // Easter Egg de Cowboy Bebop
+        function bebopEasterEgg() {
+            alert('"Whatever happens, happens."\n- Spike Spiegel');
         }
 
         // Partículas (Geométricas blancas)
@@ -211,12 +231,6 @@
                 "events": { "onhover": { "enable": true, "mode": "grab" } },
                 "modes": { "grab": { "distance": 140, "line_linked": { "opacity": 0.4 } } }
             }
-        });
-
-        // Alerta temporal para Discord
-        document.getElementById('discord-btn').addEventListener('click', function(e) {
-            e.preventDefault();
-            alert("Discord tag pendiente de actualizar.");
         });
     </script>
 </body>
