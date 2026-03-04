@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WHO IS DAITY?</title>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     
     <style>
         /* PALETA DE COLORES */
@@ -197,60 +198,9 @@
             80% { transform: translate(1px, -1px) rotate(1deg); }
             100% { transform: translate(-1px, 2px) rotate(-1deg); }
         }
-
-        /* MODAL CINEMÁTICO BEBOP */
-        .bebop-modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.95);
-            z-index: 9999;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            animation: fadeInModal 0.5s forwards;
-            cursor: pointer;
-        }
-        @keyframes fadeInModal { from { opacity: 0; } to { opacity: 1; } }
-        
-        .bebop-modal img {
-            max-width: 90%;
-            max-height: 60vh;
-            border-radius: 5px;
-            filter: grayscale(100%) contrast(120%);
-            box-shadow: 0 0 30px rgba(255, 0, 60, 0.4);
-        }
-        .bebop-text {
-            color: #fff;
-            font-family: 'Playfair Display', serif;
-            font-style: italic;
-            font-size: 1.5rem;
-            margin-top: 25px;
-            text-align: center;
-            text-shadow: 2px 2px 10px var(--red-accent);
-            letter-spacing: 2px;
-        }
-        .close-hint {
-            margin-top: 30px;
-            color: #666;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.75rem;
-            letter-spacing: 2px;
-            animation: pulse-hint 2s infinite;
-        }
-        @keyframes pulse-hint {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 1; }
-        }
     </style>
 </head>
 <body>
-
-    <div id="bebopOverlay" class="bebop-modal" onclick="closeBebop()">
-        <img src="https://i.pinimg.com/originals/a1/38/c2/a138c2f1f531ea3a6829705e4d299b80.gif" alt="Spike Spiegel">
-        <div class="bebop-text">"Whatever happens, happens."</div>
-        <div class="close-hint">[ CLICK ANYWHERE TO CLOSE ]</div>
-    </div>
 
     <div id="particles-js"></div>
 
@@ -324,7 +274,7 @@
             <div class="btn-link" onclick="copyDiscord()">DISCORD (@callmesin_)</div>
         </div>
 
-        <div class="bebop-glitch" onclick="openBebop()">
+        <div class="bebop-glitch" onclick="openBebopEpic()">
             See you space cowboy...
         </div>
 
@@ -354,15 +304,33 @@
         // Copiar usuario de Discord
         function copyDiscord() {
             navigator.clipboard.writeText("callmesin_");
-            alert("¡Usuario de Discord (callmesin_) copiado al portapapeles! Listo para agregar.");
+            // Usamos SweetAlert también aquí para que se vea pro
+            Swal.fire({
+                title: '¡Copiado!',
+                text: 'Usuario de Discord (callmesin_) copiado al portapapeles.',
+                icon: 'success',
+                background: '#111',
+                color: '#fff',
+                confirmButtonColor: '#ff003c'
+            });
         }
 
-        // Animación Épica de Cowboy Bebop
-        function openBebop() {
-            document.getElementById('bebopOverlay').style.display = 'flex';
-        }
-        function closeBebop() {
-            document.getElementById('bebopOverlay').style.display = 'none';
+        // Animación Épica de Cowboy Bebop usando SweetAlert2
+        function openBebopEpic() {
+            Swal.fire({
+                title: '<span style="font-family: \'Playfair Display\', serif; font-style: italic; letter-spacing: 2px; color: #fff;">"Whatever happens, happens."</span>',
+                text: '- Spike Spiegel',
+                imageUrl: 'https://i.pinimg.com/originals/a1/38/c2/a138c2f1f531ea3a6829705e4d299b80.gif',
+                imageWidth: 400,
+                imageAlt: 'Spike Spiegel',
+                background: '#0a0a0a',
+                color: '#666',
+                confirmButtonColor: '#ff003c',
+                confirmButtonText: 'Cerrar',
+                customClass: {
+                    popup: 'bebop-swal-popup'
+                }
+            });
         }
 
         // Partículas (Geométricas blancas)
