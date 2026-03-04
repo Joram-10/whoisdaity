@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WHO IS DAITY?</title>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     
     <style>
         /* PALETA DE COLORES */
@@ -31,44 +32,6 @@
 
         #particles-js { position: fixed; width: 100%; height: 100%; z-index: 1; }
 
-        /* MODAL ÉPICO A MANO (SIN LIBRERÍAS) */
-        .epic-modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.95);
-            z-index: 9999;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            animation: fadeIn 0.4s ease;
-            cursor: pointer;
-        }
-        .epic-modal img {
-            max-width: 90%; max-height: 50vh;
-            border-radius: 8px;
-            box-shadow: 0 0 30px rgba(255, 0, 60, 0.5);
-            filter: grayscale(100%) contrast(120%);
-        }
-        .epic-text {
-            color: #fff;
-            font-family: 'Playfair Display', serif;
-            font-style: italic;
-            font-size: 1.6rem;
-            margin-top: 25px;
-            text-shadow: 2px 2px 10px var(--red-accent);
-            text-align: center;
-            letter-spacing: 2px;
-        }
-        .epic-close {
-            margin-top: 30px;
-            color: #666;
-            font-size: 0.75rem;
-            letter-spacing: 2px;
-            animation: pulse-hint 2s infinite;
-        }
-        @keyframes pulse-hint { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
-
         /* TARJETA PRINCIPAL */
         .main-card {
             position: relative;
@@ -88,33 +51,69 @@
             overflow-y: auto;
         }
 
+        /* OCULTAR SCROLLBAR */
         .main-card::-webkit-scrollbar { width: 0px; }
 
-        /* GENGAR Y UMBREON */
+        /* GENGAR SHINY */
         .pokemon-sprite { margin-bottom: 5px; animation: float 3s ease-in-out infinite; }
         .pokemon-sprite img { width: 80px; filter: drop-shadow(0 0 10px rgba(255, 0, 60, 0.3)); }
         @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
 
+        /* UMBREON SHINY */
         .floating-mini {
-            position: absolute; right: 15px; top: 50%; transform: translateY(-50%); width: 50px;
-            animation: float-mini 3s ease-in-out infinite; filter: drop-shadow(0 0 8px rgba(0, 150, 255, 0.6));
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            animation: float-mini 3s ease-in-out infinite;
+            filter: drop-shadow(0 0 8px rgba(0, 150, 255, 0.6));
         }
-        @keyframes float-mini { 0%, 100% { transform: translateY(-50%) translateY(0px); } 50% { transform: translateY(-50%) translateY(-6px); } }
+        @keyframes float-mini {
+            0%, 100% { transform: translateY(-50%) translateY(0px); }
+            50% { transform: translateY(-50%) translateY(-6px); }
+        }
 
         .title { font-size: 2.2rem; letter-spacing: 5px; margin-bottom: 5px; font-weight: bold; }
         
-        /* CONTADOR */
-        .visitor-count { font-size: 0.75rem; color: #888; margin-bottom: 5px; letter-spacing: 1px; }
+        /* CONTADOR DE STALKERS */
+        .visitor-count { 
+            font-size: 0.75rem; 
+            color: #888; 
+            margin-bottom: 5px; 
+            letter-spacing: 1px; 
+        }
         .visitor-count span { color: var(--red-accent); font-weight: bold; }
 
-        /* FRASE Y SPOTIFY */
-        .stoic-quote { font-family: 'Playfair Display', serif; font-style: italic; font-size: 0.95rem; color: #aaa; margin-bottom: 15px; line-height: 1.4; }
+        /* FRASE ESTOICA */
+        .stoic-quote {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 0.95rem;
+            color: #aaa;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
         .highlight-red { color: var(--red-accent); font-weight: bold; }
-        .spotify-container { margin-bottom: 20px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
 
-        /* PESTAÑAS */
-        .nav-buttons { display: flex; justify-content: space-between; margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 12px; }
-        .tab-btn { background: none; border: none; color: #666; font-family: inherit; font-size: 0.85rem; cursor: pointer; transition: 0.3s; letter-spacing: 1px; }
+        /* SPOTIFY PLAYER */
+        .spotify-container {
+            margin-bottom: 20px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+        }
+
+        /* TABS (PESTAÑAS) */
+        .nav-buttons { 
+            display: flex; 
+            justify-content: space-between; 
+            margin-bottom: 20px; 
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 12px;
+        }
+        .tab-btn { 
+            background: none; border: none; color: #666; font-family: inherit; font-size: 0.85rem; cursor: pointer; transition: 0.3s; letter-spacing: 1px;
+        }
         .tab-btn:hover, .tab-btn.active { color: var(--text); text-shadow: 0 0 10px rgba(255,255,255,0.5); font-weight: bold; }
         .tab-btn.active { border-bottom: 2px solid var(--red-accent); padding-bottom: 5px; }
 
@@ -122,25 +121,75 @@
         .tab-content.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* SECCIONES Y TEXTOS */
-        .status-box { position: relative; background: rgba(255, 0, 60, 0.05); border-radius: 8px; padding: 12px; margin-bottom: 15px; border-left: 3px solid var(--red-accent); }
+        /* STATUS GAMER */
+        .status-box { 
+            position: relative;
+            background: rgba(255, 0, 60, 0.05); 
+            border-radius: 8px; 
+            padding: 12px; 
+            margin-bottom: 15px; 
+            border-left: 3px solid var(--red-accent); 
+        }
         .status-title { font-size: 0.75rem; color: var(--red-accent); display: flex; align-items: center; gap: 8px; margin-bottom: 5px; font-weight: bold; letter-spacing: 1px;}
+        
+        /* TEXTOS */
         h2 { font-size: 1.1rem; color: var(--text); margin-bottom: 10px; border-bottom: 1px solid var(--border); padding-bottom: 5px; text-transform: uppercase; }
         p, li { color: #ccc; font-size: 0.85rem; line-height: 1.6; margin-bottom: 10px; }
 
-        /* SKILLS Y EVA */
-        .skills-container { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 15px; }
-        .skill-badge { background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border); padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; color: #bbb; }
-        .eva-reference { margin-top: 20px; padding: 12px; border-left: 3px solid var(--red-accent); background: rgba(255, 0, 60, 0.02); font-size: 0.8rem; }
-        .eva-reference span { color: var(--red-accent); font-size: 0.7rem; letter-spacing: 2px; display: block; margin-bottom: 5px; }
+        /* SKILLS BADGES */
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 15px;
+        }
+        .skill-badge {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            color: #bbb;
+        }
+
+        /* EVANGELION REFERENCE */
+        .eva-reference {
+            margin-top: 20px;
+            padding: 12px;
+            border-left: 3px solid var(--red-accent);
+            background: rgba(255, 0, 60, 0.02);
+            font-size: 0.8rem;
+        }
+        .eva-reference span {
+            color: var(--red-accent);
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            display: block;
+            margin-bottom: 5px;
+        }
 
         /* BOTONES DE REDES */
-        .btn-link { display: block; text-decoration: none; color: var(--text); border: 1px solid var(--border); padding: 12px; border-radius: 8px; transition: 0.3s; font-size: 0.85rem; text-align: center; margin-bottom: 10px; background: rgba(255,255,255,0.02); cursor: pointer; }
+        .btn-link { 
+            display: block; text-decoration: none; color: var(--text); border: 1px solid var(--border); padding: 12px; border-radius: 8px; transition: 0.3s; font-size: 0.85rem; text-align: center; margin-bottom: 10px; background: rgba(255,255,255,0.02); cursor: pointer;
+        }
         .btn-link:hover { background: var(--text); color: var(--bg); box-shadow: 0 0 15px rgba(255,255,255,0.3); font-weight: bold; }
 
-        /* BEBOP GLITCH */
-        .bebop-glitch { margin-top: 30px; font-size: 0.75rem; color: #444; letter-spacing: 3px; text-transform: uppercase; text-align: center; cursor: pointer; transition: 0.3s; }
-        .bebop-glitch:hover { color: var(--red-accent); text-shadow: 0 0 10px rgba(255, 0, 60, 0.8); animation: glitch-shake 0.4s infinite; }
+        /* COWBOY BEBOP GLITCH TEXT */
+        .bebop-glitch {
+            margin-top: 30px;
+            font-size: 0.75rem;
+            color: #444;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .bebop-glitch:hover {
+            color: var(--red-accent);
+            text-shadow: 0 0 10px rgba(255, 0, 60, 0.8);
+            animation: glitch-shake 0.4s infinite;
+        }
         @keyframes glitch-shake {
             0% { transform: translate(1px, 1px) rotate(0deg); }
             20% { transform: translate(-1px, -2px) rotate(-1deg); }
@@ -149,15 +198,12 @@
             80% { transform: translate(1px, -1px) rotate(1deg); }
             100% { transform: translate(-1px, 2px) rotate(-1deg); }
         }
+        
+        /* Ajuste para la imagen en SweetAlert */
+        .swal2-image { filter: grayscale(100%) contrast(120%); box-shadow: 0 0 30px rgba(255, 0, 60, 0.4); border-radius: 5px; }
     </style>
 </head>
 <body>
-
-    <div id="spikeModal" class="epic-modal" onclick="this.style.display='none'">
-        <img src="https://i.pinimg.com/originals/a1/38/c2/a138c2f1f531ea3a6829705e4d299b80.gif" alt="Spike Spiegel">
-        <div class="epic-text">"Whatever happens, happens."</div>
-        <div class="epic-close">[ CLICK PARA CERRAR ]</div>
-    </div>
 
     <div id="particles-js"></div>
 
@@ -186,12 +232,14 @@
         </div>
 
         <div id="home-tab" class="tab-content active">
+            
             <div class="status-box">
                 <div class="status-title">► ONLINE EN POKEMMO</div>
                 <p>Región: <strong>Teselia</strong></p>
                 <p>Main: <strong>Umbreon Shiny</strong></p>
                 <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/shiny/197.gif" alt="Umbreon Shiny" class="floating-mini">
             </div>
+            
             <p style="text-align: center; font-size: 0.75rem; color: #888; margin-top: 15px;">También activo en: Valorant, Fortnite, Rocket League y Minecraft.</p>
         </div>
 
@@ -212,6 +260,7 @@
             </div>
 
             <p>Actualmente estoy puliendo mis habilidades desarrollando <strong>DyKarly</strong> (un sistema para homeópatas) y participando en otros proyectos como <strong>iTuto</strong>.</p>
+            
             <p>Cuando no estoy programando, me encontrarás jugando vóley o en el gym. 100% overthinker.</p>
             
             <div class="eva-reference">
@@ -224,24 +273,25 @@
             <h2>Redes</h2>
             <a href="https://github.com/Joram-10" target="_blank" class="btn-link">GITHUB (Proyectos y Código)</a>
             <a href="https://instagram.com/joram_luvs_naara" target="_blank" class="btn-link">INSTAGRAM (@joram_luvs_naara)</a>
+            
             <div class="btn-link" onclick="copyDiscord()">DISCORD (@callmesin_)</div>
         </div>
 
-        <div class="bebop-glitch" onclick="document.getElementById('spikeModal').style.display='flex'">
-            See you space cowboy...
+        <div class="bebop-glitch" onclick="openBebopEpic()">
+            SEE YOU SPACE COWBOY...
         </div>
 
     </div>
 
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
-        // Contador
+        // Contador de Stalkers
         fetch('https://api.counterapi.dev/v1/daity_portfolio_v3/stalkers/up')
             .then(response => response.json())
             .then(data => { document.getElementById('count').innerText = data.count; })
             .catch(() => { document.getElementById('count').innerText = Math.floor(Math.random() * 50) + 10; });
 
-        // Pestañas
+        // Lógica de Pestañas
         function openTab(evt, tabName) {
             let i, tabcontent, tablinks;
             tabcontent = document.getElementsByClassName("tab-content");
@@ -254,13 +304,38 @@
             evt.currentTarget.classList.add("active");
         }
 
-        // Discord Copy
+        // Copiar usuario de Discord
         function copyDiscord() {
             navigator.clipboard.writeText("callmesin_");
-            alert("¡Usuario de Discord copiado!");
+            Swal.fire({
+                title: '¡Copiado!',
+                text: 'Usuario de Discord (callmesin_) copiado al portapapeles.',
+                icon: 'success',
+                background: '#111',
+                color: '#fff',
+                confirmButtonColor: '#ff003c'
+            });
         }
 
-        // Partículas
+        // Animación Épica de Cowboy Bebop apuntando al archivo local 35.gif
+        function openBebopEpic() {
+            Swal.fire({
+                title: '<span style="font-family: \'Playfair Display\', serif; font-style: italic; letter-spacing: 2px; color: #fff;">"Whatever happens, happens."</span>',
+                text: '- Spike Spiegel',
+                imageUrl: '35.gif',
+                imageWidth: 400,
+                imageAlt: 'Spike Spiegel',
+                background: '#0a0a0a',
+                color: '#666',
+                confirmButtonColor: '#ff003c',
+                confirmButtonText: 'Cerrar',
+                customClass: {
+                    popup: 'bebop-swal-popup'
+                }
+            });
+        }
+
+        // Partículas (Geométricas blancas)
         particlesJS('particles-js', {
             "particles": {
                 "number": { "value": 70 },
@@ -268,7 +343,13 @@
                 "shape": { "type": "circle" },
                 "opacity": { "value": 0.3 },
                 "size": { "value": 2 },
-                "line_linked": { "enable": true, "distance": 150, "color": "#ffffff", "opacity": 0.15, "width": 1 },
+                "line_linked": { 
+                    "enable": true, 
+                    "distance": 150, 
+                    "color": "#ffffff", 
+                    "opacity": 0.15, 
+                    "width": 1 
+                },
                 "move": { "enable": true, "speed": 1.5, "direction": "none" }
             },
             "interactivity": {
