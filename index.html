@@ -1,274 +1,331 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WHO IS DAITY?</title>
-
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    
     <style>
-        *{
-            margin:0;
-            padding:0;
-            box-sizing:border-box;
+        /* CONFIGURACIÓN GLOBAL */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        body{
-            background:#050505;
-            color:white;
-            font-family:'JetBrains Mono', monospace;
-            min-height:100vh;
-            display:flex;
-            justify-content:center;
-            align-items:center;
-            overflow:hidden;
-            padding:20px;
+        :root {
+            --bg-color: #050505;
+            --card-bg: #0d0d0d;
+            --accent-cyan: #00e5ff;
+            --text-white: #ffffff;
+            --text-muted: #666666;
+            --border-rgba: rgba(255, 255, 255, 0.05);
         }
 
-        #particles-js{
-            position:fixed;
-            width:100%;
-            height:100%;
-            z-index:1;
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-white);
+            font-family: 'JetBrains Mono', monospace;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
         }
 
-        .main-card{
-            position:relative;
-            z-index:2;
-
-            width:100%;
-            max-width:500px;
-
-            padding:40px;
-
-            border-radius:24px;
-
-            background:rgba(255,255,255,0.03);
-
-            border:1px solid rgba(255,255,255,0.08);
-
-            backdrop-filter:blur(18px);
-            -webkit-backdrop-filter:blur(18px);
-
-            box-shadow:
-                0 20px 60px rgba(0,0,0,0.8),
-                0 0 40px rgba(163,102,255,0.05);
-
-            animation:fadeUp 1s ease;
-            transition:0.3s;
+        /* FONDO DE PARTÍCULAS */
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
         }
 
-        .main-card:hover{
-            transform:translateY(-6px);
-            border-color:rgba(163,102,255,0.25);
+        /* TARJETA PRINCIPAL */
+        .main-card {
+            position: relative;
+            z-index: 2;
+            background: var(--card-bg);
+            border: 1px solid var(--border-rgba);
+            border-top: 3px solid var(--accent-cyan);
+            border-radius: 16px;
+            padding: 35px 25px;
+            width: 90%;
+            max-width: 430px;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9);
         }
 
-        @keyframes fadeUp{
-            from{
-                opacity:0;
-                transform:translateY(20px);
-            }
-
-            to{
-                opacity:1;
-                transform:translateY(0);
-            }
+        /* SPRITE POKÉMON */
+        .pokemon-container {
+            text-align: center;
+            margin-bottom: 15px;
+            height: 80px; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        .pokemon-sprite{
-            margin-bottom:15px;
-            animation:float 3s ease-in-out infinite;
+        .pokemon-sprite {
+            width: 75px;
+            height: auto;
+            image-rendering: pixelated; /* Fundamental para que el sprite de 5ta gen se vea nítido */
+            filter: drop-shadow(0 0 10px rgba(0, 229, 255, 0.5));
+            animation: float 3s ease-in-out infinite;
         }
 
-        .pokemon-sprite img{
-            width:95px;
-            filter:drop-shadow(0 0 20px rgba(163,102,255,0.6));
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
         }
 
-        @keyframes float{
-            0%,100%{
-                transform:translateY(0px);
-            }
-
-            50%{
-                transform:translateY(-12px);
-            }
+        /* SECCIÓN DE IDENTIDAD */
+        .identity {
+            text-align: center;
+            margin-bottom: 20px;
         }
 
-        .title{
-            font-size:2.4rem;
-            letter-spacing:5px;
-            margin-bottom:12px;
-            text-align:center;
+        .title {
+            font-size: 2.4rem;
+            letter-spacing: 6px;
+            font-weight: 700;
+            margin-bottom: 8px;
         }
 
-        .subtitle{
-            color:#9d9d9d;
-            font-size:0.9rem;
-            line-height:1.7;
-            text-align:center;
-            margin-bottom:20px;
+        .stalker-count {
+            color: #888;
+            font-size: 0.8rem;
+            margin-bottom: 6px;
         }
 
-        #typewriter-text{
-            color:#a366ff;
-            text-align:center;
-            min-height:30px;
-            margin-bottom:30px;
-            font-size:0.95rem;
+        .stalker-count span {
+            color: var(--accent-cyan);
+            font-weight: bold;
         }
 
-        .trainer-status{
-            background:rgba(255,255,255,0.02);
-
-            border:1px solid rgba(255,255,255,0.05);
-
-            border-left:4px solid #00ff88;
-
-            border-radius:14px;
-
-            padding:18px;
-
-            margin-bottom:25px;
+        .main-quote {
+            font-style: italic;
+            font-size: 0.8rem;
+            color: #aaa;
         }
 
-        .status-badge{
-            display:flex;
-            align-items:center;
-            gap:10px;
-
-            color:#00ff88;
-
-            font-size:0.75rem;
-            font-weight:bold;
-            letter-spacing:1px;
-
-            margin-bottom:10px;
+        .main-quote span {
+            color: var(--accent-cyan);
+            font-weight: bold;
+            font-style: italic;
         }
 
-        .pulse{
-            width:8px;
-            height:8px;
-
-            border-radius:50%;
-
-            background:#00ff88;
-
-            animation:pulse-animation 2s infinite;
+        /* NAVEGACIÓN POR PESTAÑAS */
+        .tabs-nav {
+            display: flex;
+            border-bottom: 1px solid var(--border-rgba);
+            margin-bottom: 20px;
         }
 
-        @keyframes pulse-animation{
-            0%{
-                box-shadow:0 0 0 0 rgba(0,255,136,0.7);
-            }
-
-            70%{
-                box-shadow:0 0 0 10px rgba(0,255,136,0);
-            }
-
-            100%{
-                box-shadow:0 0 0 0 rgba(0,255,136,0);
-            }
+        .tab-link {
+            flex: 1;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            font-weight: bold;
+            padding: 10px 0;
+            cursor: pointer;
+            text-align: center;
+            letter-spacing: 1px;
+            transition: 0.2s;
         }
 
-        .trainer-info p{
-            color:#bdbdbd;
-            font-size:0.82rem;
-            margin:6px 0;
+        .tab-link.active {
+            color: var(--text-white);
+            border-bottom: 2px solid var(--accent-cyan);
         }
 
-        .tech-stack{
-            display:flex;
-            flex-wrap:wrap;
-            justify-content:center;
-            gap:10px;
-
-            margin-bottom:30px;
+        /* CONTENEDORES DE CONTENIDO (PANELS) */
+        .tab-panel {
+            display: none;
+            max-height: 280px;
+            overflow-y: auto;
+            padding-right: 4px;
         }
 
-        .tech-stack span{
-            padding:8px 14px;
-
-            border-radius:999px;
-
-            background:rgba(255,255,255,0.03);
-
-            border:1px solid rgba(255,255,255,0.07);
-
-            font-size:0.75rem;
-            color:#d1d1d1;
-
-            transition:0.3s;
+        .tab-panel.active {
+            display: block;
         }
 
-        .tech-stack span:hover{
-            background:rgba(163,102,255,0.12);
-            border-color:rgba(163,102,255,0.3);
-
-            transform:translateY(-2px);
-
-            color:white;
+        .tab-panel::-webkit-scrollbar {
+            width: 4px;
+        }
+        .tab-panel::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .tab-panel::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 2px;
         }
 
-        .button-group{
-            display:flex;
-            flex-direction:column;
-            gap:12px;
+        /* CONTENIDO: SOBRE MÍ */
+        .section-headline {
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            color: var(--text-white);
         }
 
-        .btn{
-            text-decoration:none;
-
-            color:white;
-
-            text-align:center;
-
-            padding:13px;
-
-            border-radius:10px;
-
-            border:1px solid rgba(255,255,255,0.08);
-
-            background:rgba(255,255,255,0.02);
-
-            font-size:0.85rem;
-
-            transition:0.3s;
+        .panel-text {
+            font-size: 0.75rem;
+            color: #aaaaaa;
+            line-height: 1.5;
+            margin-bottom: 12px;
         }
 
-        .btn:hover{
-            background:white;
-            color:black;
-
-            transform:scale(1.02);
-
-            box-shadow:0 0 20px rgba(255,255,255,0.15);
+        .category-label {
+            color: var(--accent-cyan);
+            font-size: 0.7rem;
+            font-weight: bold;
+            margin: 12px 0 6px 0;
+            display: block;
         }
 
-        .footer{
-            margin-top:25px;
-            text-align:center;
-
-            color:#666;
-            font-size:0.7rem;
+        .tags-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 10px;
         }
 
-        @media(max-width:520px){
+        .tech-tag {
+            background: #121212;
+            border: 1px solid #222;
+            color: #cccccc;
+            font-size: 0.7rem;
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
 
-            .main-card{
-                padding:30px 22px;
-            }
+        .pattern-container {
+            border-left: 2px solid var(--accent-cyan);
+            background: rgba(0, 229, 255, 0.02);
+            padding: 10px;
+            margin-top: 15px;
+        }
 
-            .title{
-                font-size:1.8rem;
-                letter-spacing:3px;
-            }
+        .pattern-head {
+            color: var(--accent-cyan);
+            font-size: 0.7rem;
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
 
-            .subtitle{
-                font-size:0.8rem;
-            }
+        /* CONTENIDO: CONTACTO / REDES */
+        .network-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
 
+        .network-item {
+            background: #111111;
+            border: 1px solid #222;
+            color: #ffffff;
+            text-decoration: none;
+            padding: 14px;
+            border-radius: 6px;
+            text-align: center;
+            font-size: 0.75rem;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .network-item:hover {
+            border-color: var(--accent-cyan);
+            background: rgba(0, 229, 255, 0.02);
+            box-shadow: 0 0 10px rgba(0, 229, 255, 0.1);
+        }
+
+        /* PIE DE PÁGINA / TRIGGER DEL EASTER EGG */
+        .space-cowboy-footer {
+            text-align: center;
+            color: #333;
+            font-size: 0.65rem;
+            letter-spacing: 3px;
+            margin-top: 25px;
+            cursor: pointer;
+            user-select: none;
+            transition: color 0.2s;
+        }
+
+        .space-cowboy-footer:hover {
+            color: var(--text-muted);
+        }
+
+        /* CAPA MODAL (EASTER EGG DE SPIKE) */
+        .egg-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 100;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .egg-modal-overlay.open {
+            display: flex;
+        }
+
+        .modal-box {
+            background: #0a0a0a;
+            border: 1px solid #222;
+            border-radius: 12px;
+            padding: 20px;
+            max-width: 360px;
+            width: 85%;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+        }
+
+        .modal-gif {
+            width: 100%;
+            height: auto;
+            border-radius: 6px;
+            filter: grayscale(100%);
+            margin-bottom: 15px;
+        }
+
+        .modal-quote {
+            font-style: italic;
+            font-size: 1.1rem;
+            color: #ffffff;
+            margin-bottom: 6px;
+        }
+
+        .modal-author {
+            color: #555;
+            font-size: 0.75rem;
+            margin-bottom: 18px;
+        }
+
+        .modal-close-btn {
+            background: var(--accent-cyan);
+            color: #000000;
+            border: none;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: bold;
+            font-size: 0.75rem;
+            padding: 8px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .modal-close-btn:hover {
+            opacity: 0.9;
+            box-shadow: 0 0 10px rgba(0, 229, 255, 0.4);
         }
     </style>
 </head>
@@ -277,178 +334,139 @@
     <div id="particles-js"></div>
 
     <div class="main-card">
-
-        <div class="pokemon-sprite">
-            <img
-                src="https://projectpokemon.org/images/shiny-sprites/gengar.gif"
-                alt="Gengar Shiny"
-            />
+        
+        <div class="pokemon-container">
+            <img src="https://play.pokemonshowdown.com/sprites/gen5ani-shiny/umbreon.gif" alt="Umbreon Shiny" class="pokemon-sprite">
         </div>
 
-        <h1 class="title">WHO IS DAITY?</h1>
+        <div class="identity">
+            <h1 class="title">DAITY</h1>
+            <p class="stalker-count">Eres la persona <span>#124</span> que me stalkea.</p>
+            <p class="main-quote">"El pasado ya no me afecta, y el futuro <span>no puede</span>."</p>
+        </div>
 
-        <p class="subtitle">
-            Un estudiante de software al que le gusta crear cosas,
-            perderse en ideas raras y jugar demasiado PokeMMO.
-        </p>
+        <iframe style="border-radius:12px; margin-bottom: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);" src="https://open.spotify.com/embed/track/57RA3JGafJm5zRtKJiKPIm?utm_source=generator&theme=0" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
 
-        <div id="typewriter-text"></div>
+        <div class="tabs-nav">
+            <button class="tab-link active" onclick="switchTab(event, 'tab-sobre-mi')">SOBRE MÍ</button>
+            <button class="tab-link" onclick="switchTab(event, 'tab-contacto')">CONTACTO</button>
+        </div>
 
-        <div class="trainer-status">
+        <div id="tab-sobre-mi" class="tab-panel active">
+            <h2 class="section-headline">HARDWARE & SOFTWARE</h2>
+            <p class="panel-text">
+                Estudio como <strong>Tecnólogo en Desarrollo de Software</strong> en el CETI. Me apasionan las páginas web y las bases de datos, y a lo largo del camino he expandido mi stack de herramientas:
+            </p>
 
-            <div class="status-badge">
-                <span class="pulse"></span>
-                ONLINE
+            <span class="category-label">> LENGUAJES & SCRIPTING</span>
+            <div class="tags-wrapper">
+                <span class="tech-tag">JavaScript / Node.js</span>
+                <span class="tech-tag">Python</span>
+                <span class="tech-tag">C++</span>
+                <span class="tech-tag">Ensamblador</span>
             </div>
 
-            <div class="trainer-info">
-                <p>Región favorita: <strong>Teselia</strong></p>
-                <p>Main Pokémon: <strong>Dragonite</strong></p>
-                <p>Actualmente aprendiendo: <strong>Backend</strong></p>
+            <span class="category-label">> BASES DE DATOS & SERVICIOS</span>
+            <div class="tags-wrapper">
+                <span class="tech-tag">MongoDB</span>
+                <span class="tech-tag">SQL (SQLite, MySQL)</span>
+                <span class="tech-tag">Supabase</span>
+                <span class="tech-tag">Vercel</span>
             </div>
 
+            <span class="category-label">> HARDWARE, SISTEMAS & MÓVIL</span>
+            <div class="tags-wrapper">
+                <span class="tech-tag">Arduino</span>
+                <span class="tech-tag">ESP32</span>
+                <span class="tech-tag">Android Móvil</span>
+                <span class="tech-tag">DFD</span>
+            </div>
+
+            <p class="panel-text" style="margin-top: 15px;">
+                Actualmente estoy desarrollando <strong>DyKarly</strong> (un sistema para homeópatas que opera 100% offline) y participando en otros proyectos independientes como <strong>iTuto</strong> y gestionando la agencia <strong>Raíz Digital</strong>.
+            </p>
+            <p class="panel-text">
+                Cuando no programo, me encontrarás jugando vóley o en el gym. 100% overthinker.
+            </p>
+
+            <div class="pattern-container">
+                <div class="pattern-head">[ PATTERN: CIAN ]</div>
+                <p class="panel-text" style="margin: 0; color: #eee;">
+                    Fan de Evangelion, Vinland Saga, Mob Psycho 100 y el buen anime. Sobreviviendo al dilema del erizo sin ponerme raro.
+                </p>
+            </div>
         </div>
 
-        <div class="tech-stack">
-            <span>HTML</span>
-            <span>CSS</span>
-            <span>JavaScript</span>
-            <span>PHP</span>
-            <span>MySQL</span>
-            <span>Git</span>
+        <div id="tab-contacto" class="tab-panel">
+            <h2 class="section-headline" style="margin-bottom: 15px;">REDES</h2>
+            <div class="network-list">
+                <a href="https://github.com/Joram-10" target="_blank" class="network-item">GITHUB (Proyectos y Código)</a>
+                <a href="#" class="network-item">INSTAGRAM (@joram_luvs_naara)</a>
+                <div class="network-item" style="cursor: default;">DISCORD (daity33)</div>
+            </div>
         </div>
 
-        <nav class="button-group">
-
-            <a
-                href="https://github.com/Joram-10"
-                target="_blank"
-                class="btn"
-            >
-                GITHUB
-            </a>
-
-            <a href="#" class="btn">
-                PROYECTOS
-            </a>
-
-            <a href="#" class="btn">
-                CONTACTO
-            </a>
-
-        </nav>
-
-        <div class="footer">
-            made with overthinking and caffeine.
+        <div class="space-cowboy-footer" onclick="openEasterEgg()">
+            S E E   Y O U   S P A C E   C O W B O Y . . .
         </div>
 
     </div>
 
+    <div class="egg-modal-overlay" id="spike-modal">
+        <div class="modal-box">
+            <img src="35.gif" alt="Spike Spiegel" class="modal-gif">
+            <p class="modal-quote">"Whatever happens, happens."</p>
+            <p class="modal-author">- Spike Spiegel</p>
+            <button class="modal-close-btn" onclick="closeEasterEgg()">Cerrar</button>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-
-    <script src="https://unpkg.com/typewriter-effect@latest/dist/core.js"></script>
-
     <script>
+        // TABS
+        function switchTab(event, tabId) {
+            const panels = document.querySelectorAll('.tab-panel');
+            const links = document.querySelectorAll('.tab-link');
+            
+            panels.forEach(panel => panel.classList.remove('active'));
+            links.forEach(link => link.classList.remove('active'));
+            
+            document.getElementById(tabId).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
 
-        // TYPEWRITER
+        // MODAL (EASTER EGG)
+        function openEasterEgg() {
+            document.getElementById('spike-modal').classList.add('open');
+        }
 
-        const textElement =
-            document.getElementById('typewriter-text');
+        function closeEasterEgg() {
+            document.getElementById('spike-modal').classList.remove('open');
+        }
 
-        new Typewriter(textElement, {
-
-            strings: [
-
-                'Desarrollador en proceso.',
-                'PokeMMO enjoyer.',
-                'Frontend + Backend.',
-                'A veces sobrepienso demasiado.',
-                'Me gusta crear cosas raras.'
-
-            ],
-
-            autoStart:true,
-            loop:true,
-
-            delay:50,
-            deleteSpeed:25
-
-        });
-
-        // PARTICLES
-
-        particlesJS('particles-js', {
-
-            particles: {
-
-                number: {
-                    value:80,
-                    density:{
-                        enable:true,
-                        value_area:800
-                    }
-                },
-
-                color:{
-                    value:'#ffffff'
-                },
-
-                shape:{
-                    type:'circle'
-                },
-
-                opacity:{
-                    value:0.25,
-                    random:true
-                },
-
-                size:{
-                    value:2,
-                    random:true
-                },
-
-                line_linked:{
-                    enable:true,
-                    distance:140,
-                    color:'#ffffff',
-                    opacity:0.08,
-                    width:1
-                },
-
-                move:{
-                    enable:true,
-                    speed:1.3,
-                    direction:'none',
-                    random:true,
-                    straight:false,
-                    out_mode:'out'
-                }
-
-            },
-
-            interactivity:{
-
-                events:{
-                    onhover:{
-                        enable:true,
-                        mode:'grab'
-                    }
-                },
-
-                modes:{
-                    grab:{
-                        distance:140,
-                        line_linked:{
-                            opacity:0.3
-                        }
-                    }
-                }
-
+        // Cierra el modal si das clic afuera del recuadro
+        document.getElementById('spike-modal').addEventListener('click', function(e) {
+            if(e.target === this) {
+                closeEasterEgg();
             }
-
         });
 
+        // PARTICULAS
+        particlesJS('particles-js', {
+            "particles": {
+                "number": { "value": 55, "density": { "enable": true, "value_area": 800 } },
+                "color": { "value": "#ffffff" },
+                "shape": { "type": "circle" },
+                "opacity": { "value": 0.25, "random": true },
+                "size": { "value": 2, "random": true },
+                "line_linked": { "enable": true, "distance": 140, "color": "#ffffff", "opacity": 0.08, "width": 1 },
+                "move": { "enable": true, "speed": 1, "direction": "none", "random": true, "out_mode": "out" }
+            },
+            "interactivity": {
+                "events": { "onhover": { "enable": false }, "onclick": { "enable": false } }
+            },
+            "retina_detect": true
+        });
     </script>
-
 </body>
 </html>
