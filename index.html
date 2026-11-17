@@ -327,6 +327,18 @@
             opacity: 0.9;
             box-shadow: 0 0 10px rgba(0, 229, 255, 0.4);
         }
+
+        /* STATS RPG */
+        .stat-row { display:flex; align-items:center; gap:8px; margin-bottom:8px; font-size:0.7rem; color:#ccc; }
+        .stat-name { width:110px; }
+        .stat-bar { flex:1; height:6px; background:#161616; border-radius:3px; overflow:hidden; }
+        .stat-fill { height:100%; background:var(--accent-cyan); box-shadow:0 0 6px rgba(0,229,255,.5); }
+        .stat-val { width:34px; text-align:right; color:#888; }
+        .random-card { background:#111; border:1px solid #222; border-radius:6px; padding:10px; margin-bottom:8px; }
+        .random-card .q { color:var(--accent-cyan); font-size:0.65rem; font-weight:bold; margin-bottom:4px; }
+        .random-card .a { color:#ccc; font-size:0.75rem; }
+        .pokemon-sprite { cursor:pointer; }
+        body.matrix { --accent-cyan:#ff3df2; }
     </style>
 </head>
 <body>
@@ -336,26 +348,27 @@
     <div class="main-card">
         
         <div class="pokemon-container">
-            <img src="https://play.pokemonshowdown.com/sprites/gen5ani-shiny/umbreon.gif" alt="Umbreon Shiny" class="pokemon-sprite">
+            <img id="umbreon" src="https://play.pokemonshowdown.com/sprites/gen5ani-shiny/umbreon.gif" alt="Umbreon Shiny" class="pokemon-sprite" title="Dale clic">
         </div>
 
         <div class="identity">
             <h1 class="title">DAITY</h1>
             <p class="stalker-count">Eres la persona <span>#124</span> que me stalkea.</p>
-            <p class="main-quote">"El pasado ya no me afecta, y el futuro <span>no puede</span>."</p>
+            <p class="main-quote" id="quote">"El pasado ya no me afecta, y el futuro <span>no puede</span>."</p>
         </div>
 
         <iframe style="border-radius:12px; margin-bottom: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);" src="https://open.spotify.com/embed/track/57RA3JGafJm5zRtKJiKPIm?utm_source=generator&theme=0" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
 
         <div class="tabs-nav">
             <button class="tab-link active" onclick="switchTab(event, 'tab-sobre-mi')">SOBRE MÍ</button>
+            <button class="tab-link" onclick="switchTab(event, 'tab-random')">RANDOM</button>
             <button class="tab-link" onclick="switchTab(event, 'tab-contacto')">CONTACTO</button>
         </div>
 
         <div id="tab-sobre-mi" class="tab-panel active">
             <h2 class="section-headline">HARDWARE & SOFTWARE</h2>
             <p class="panel-text">
-                Estudio como <strong>Tecnólogo en Desarrollo de Software</strong> en el CETI. Me apasionan las páginas web y las bases de datos, y a lo largo del camino he expandido mi stack de herramientas:
+                Egresé como <strong>Tecnólogo en Desarrollo de Software</strong> del CETI y ahora estudio la <strong>Ingeniería en Desarrollo de Software</strong> en el CETI. Me apasionan las páginas web y las bases de datos, y a lo largo del camino he expandido mi stack de herramientas:
             </p>
 
             <span class="category-label">> LENGUAJES & SCRIPTING</span>
@@ -395,6 +408,21 @@
                     Fan de Evangelion, Vinland Saga, Mob Psycho 100 y el buen anime. Sobreviviendo al dilema del erizo sin ponerme raro.
                 </p>
             </div>
+        </div>
+
+        <div id="tab-random" class="tab-panel">
+            <h2 class="section-headline">STATS</h2>
+            <div class="stat-row"><span class="stat-name">Código</span><div class="stat-bar"><div class="stat-fill" style="width:75%"></div></div><span class="stat-val">75</span></div>
+            <div class="stat-row"><span class="stat-name">Vóley</span><div class="stat-bar"><div class="stat-fill" style="width:80%"></div></div><span class="stat-val">80</span></div>
+            <div class="stat-row"><span class="stat-name">Gym</span><div class="stat-bar"><div class="stat-fill" style="width:65%"></div></div><span class="stat-val">65</span></div>
+            <div class="stat-row"><span class="stat-name">Overthinking</span><div class="stat-bar"><div class="stat-fill" style="width:100%"></div></div><span class="stat-val">100</span></div>
+            <div class="stat-row"><span class="stat-name">Sueño</span><div class="stat-bar"><div class="stat-fill" style="width:12%"></div></div><span class="stat-val">12</span></div>
+
+            <h2 class="section-headline" style="margin-top:18px;">DATOS RANDOM</h2>
+            <div class="random-card"><div class="q">> MÚSICA</div><div class="a">Clairo, Wallows y lofi tranquilo.</div></div>
+            <div class="random-card"><div class="q">> PROGRAMANDO CON</div><div class="a">Python, JavaScript y mucho café (o lo que haya).</div></div>
+            <div class="random-card"><div class="q">> POKÉMON FAVORITO</div><div class="a">Umbreon shiny, obvio. Dale clic arriba.</div></div>
+            <div class="random-card"><div class="q">> SECRETO</div><div class="a">Hay un código escondido en esta página. Pista: arriba, arriba, abajo, abajo...</div></div>
         </div>
 
         <div id="tab-contacto" class="tab-panel">
@@ -449,6 +477,32 @@
             if(e.target === this) {
                 closeEasterEgg();
             }
+        });
+
+        // UMBREON: clic alterna shiny / normal
+        let shiny = true;
+        document.getElementById('umbreon').addEventListener('click', function() {
+            shiny = !shiny;
+            this.src = 'https://play.pokemonshowdown.com/sprites/' + (shiny ? 'gen5ani-shiny' : 'gen5ani') + '/umbreon.gif';
+            this.alt = shiny ? 'Umbreon Shiny' : 'Umbreon';
+        });
+
+        // FRASE RANDOM CADA VISITA
+        const frases = [
+            'El pasado ya no me afecta, y el futuro <span>no puede</span>.',
+            'Funciona en mi máquina.',
+            'Un commit más y me duermo. <span>Mentira</span>.',
+            'Whatever happens, <span>happens</span>.',
+            'Overthinking al <span>100%</span>.'
+        ];
+        document.getElementById('quote').innerHTML = '"' + frases[Math.floor(Math.random() * frases.length)] + '"';
+
+        // EASTER EGG: CÓDIGO KONAMI
+        const konami = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
+        let kpos = 0;
+        document.addEventListener('keydown', function(e) {
+            kpos = (e.key === konami[kpos]) ? kpos + 1 : (e.key === konami[0] ? 1 : 0);
+            if (kpos === konami.length) { document.body.classList.toggle('matrix'); kpos = 0; }
         });
 
         // PARTICULAS
