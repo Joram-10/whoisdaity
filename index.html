@@ -339,6 +339,18 @@
         .random-card .a { color:#ccc; font-size:0.75rem; }
         .pokemon-sprite { cursor:pointer; }
         body.matrix { --accent-cyan:#ff3df2; }
+
+        /* PROYECTOS + FORMACIÓN */
+        .proj-card { display:block; background:#111; border:1px solid #222; border-radius:6px; padding:12px; margin-bottom:10px; text-decoration:none; color:inherit; transition:0.2s; }
+        a.proj-card:hover { border-color:var(--accent-cyan); box-shadow:0 0 10px rgba(0,229,255,0.1); }
+        .proj-name { color:#fff; font-size:0.8rem; font-weight:bold; margin-bottom:4px; display:flex; justify-content:space-between; }
+        .proj-name small { color:var(--accent-cyan); font-weight:normal; font-size:0.65rem; }
+        .proj-desc { color:#aaa; font-size:0.72rem; line-height:1.5; }
+        .timeline { border-left:2px solid #222; margin:6px 0 12px 4px; padding-left:12px; }
+        .tl-item { position:relative; margin-bottom:10px; font-size:0.72rem; color:#ccc; line-height:1.5; }
+        .tl-item::before { content:''; position:absolute; left:-18px; top:5px; width:8px; height:8px; border-radius:50%; background:#333; }
+        .tl-item.now::before { background:var(--accent-cyan); box-shadow:0 0 6px rgba(0,229,255,.6); }
+        .tl-item span { color:#666; display:block; font-size:0.65rem; }
     </style>
 </head>
 <body>
@@ -361,6 +373,7 @@
 
         <div class="tabs-nav">
             <button class="tab-link active" onclick="switchTab(event, 'tab-sobre-mi')">SOBRE MÍ</button>
+            <button class="tab-link" onclick="switchTab(event, 'tab-proyectos')">PROYECTOS</button>
             <button class="tab-link" onclick="switchTab(event, 'tab-random')">RANDOM</button>
             <button class="tab-link" onclick="switchTab(event, 'tab-contacto')">CONTACTO</button>
         </div>
@@ -370,6 +383,15 @@
             <p class="panel-text">
                 Egresé como <strong>Tecnólogo en Desarrollo de Software</strong> del CETI y ahora estudio la <strong>Ingeniería en Desarrollo de Software</strong> en el CETI. Me apasionan las páginas web y las bases de datos, y a lo largo del camino he expandido mi stack de herramientas:
             </p>
+
+            <span class="category-label">> FORMACIÓN</span>
+            <div class="timeline">
+                <div class="tl-item now">Ingeniería en Desarrollo de Software<span>CETI Tonalá · cursando</span></div>
+                <div class="tl-item">Tecnólogo en Desarrollo de Software<span>CETI Río Santiago · egresado</span></div>
+            </div>
+
+            <span class="category-label">> OBJETIVO</span>
+            <p class="panel-text">Seguir creciendo como desarrollador de software y trabajar en proyectos reales de gran escala.</p>
 
             <span class="category-label">> LENGUAJES & SCRIPTING</span>
             <div class="tags-wrapper">
@@ -408,6 +430,30 @@
                     Fan de Evangelion, Vinland Saga, Mob Psycho 100 y el buen anime. Sobreviviendo al dilema del erizo sin ponerme raro.
                 </p>
             </div>
+        </div>
+
+        <div id="tab-proyectos" class="tab-panel">
+            <h2 class="section-headline">PROYECTOS</h2>
+            <div class="proj-card">
+                <div class="proj-name">DyKarly <small>EN DESARROLLO</small></div>
+                <div class="proj-desc">Sistema para homeópatas que opera 100% offline.</div>
+            </div>
+            <a class="proj-card" href="https://github.com/Joram-10/Raiz-Digital2" target="_blank">
+                <div class="proj-name">Raíz Digital <small>GITHUB ↗</small></div>
+                <div class="proj-desc">Agencia digital que gestiono.</div>
+            </a>
+            <div class="proj-card">
+                <div class="proj-name">iTuto</div>
+                <div class="proj-desc">Proyecto independiente.</div>
+            </div>
+            <a class="proj-card" href="https://github.com/Joram-10/nexusflow" target="_blank">
+                <div class="proj-name">nexusflow <small>GITHUB ↗</small></div>
+                <div class="proj-desc">Repositorio en GitHub.</div>
+            </a>
+            <a class="proj-card" href="https://github.com/Joram-10?tab=repositories" target="_blank">
+                <div class="proj-name">Todos mis repos <small>GITHUB ↗</small></div>
+                <div class="proj-desc">Más proyectos y código en mi perfil.</div>
+            </a>
         </div>
 
         <div id="tab-random" class="tab-panel">
